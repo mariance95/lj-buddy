@@ -2,3 +2,4 @@
 /installer/drivers/
 *.syso
 *.exe
+/_site/

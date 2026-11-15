@@ -44,7 +44,7 @@ type Driver interface {
 func (k Kind) Label() string {
 	switch k {
 	case KindOpenDMX:
-		return "Open DMX (FTDI)"
+		return "Open DMX"
 	case KindPro:
 		return "DMX USB Pro"
 	case KindUltraPro:

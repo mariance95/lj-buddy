@@ -1,7 +1,7 @@
 # LJ Buddy
 
 Aplicación de control de iluminación por DMX. Forma parte de
-[ShowBuddy](https://github.com/mariance95/ShowBuddy), un conjunto de
+[JayBuddies](https://jaybuddies.vercel.app/), un conjunto de
 aplicaciones abiertas para sonido, iluminación y visual.
 
 La aplicación principal vivirá en la raíz de este repositorio y está por

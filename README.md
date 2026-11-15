@@ -13,6 +13,10 @@ comenzar a desarrollarse.
 |---|---|
 | [`artnet-translator/`](artnet-translator/) | **LJ Buddy ArtNet Translator**: recibe universos Art-Net por la red y los envía por interfaces USB-DMX (Enttec Open DMX, DMX USB Pro y compatibles). Incluye instalador para Windows. Su versión web de ejemplo está en [`artnet-translator/web-example/`](artnet-translator/web-example/). |
 
+## Ideas pendientes
+
+- [Control remoto por sesión (web + escritorio)](docs/control-remoto.md)
+
 ## Licencia
 
 MIT. Ver [LICENSE](LICENSE).

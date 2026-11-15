@@ -40,8 +40,9 @@ func (l *LogBuffer) Lines() []string {
 	return append([]string{}, l.lines...)
 }
 
-// Handler arma las rutas HTTP. quit se invoca cuando el usuario pide salir.
-func Handler(e *engine.Engine, logs *LogBuffer, version string, quit func()) http.Handler {
+// Handler arma las rutas HTTP. show se invoca cuando otra instancia pide
+// mostrar el panel y quit cuando el usuario pide salir.
+func Handler(e *engine.Engine, logs *LogBuffer, version string, show, quit func()) http.Handler {
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("GET /{$}", func(w http.ResponseWriter, r *http.Request) {
@@ -99,6 +100,10 @@ func Handler(e *engine.Engine, logs *LogBuffer, version string, quit func()) htt
 			return
 		}
 		reply(w, e.AddManualPort(in.Port))
+	})
+	mux.HandleFunc("POST /api/show", func(w http.ResponseWriter, r *http.Request) {
+		show()
+		reply(w, nil)
 	})
 	mux.HandleFunc("POST /api/quit", func(w http.ResponseWriter, r *http.Request) {
 		reply(w, nil)

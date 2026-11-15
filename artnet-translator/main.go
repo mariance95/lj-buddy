@@ -14,33 +14,47 @@ import (
 	"path/filepath"
 	"runtime"
 	"sync"
+	"time"
 
 	"github.com/mariance95/lj-buddy/artnet-translator/internal/engine"
 	"github.com/mariance95/lj-buddy/artnet-translator/internal/web"
 )
 
+const appName = "LJ Buddy ArtNet Translator"
+
 var version = "1.0.0"
 
+// uiOptions es lo que necesita la interfaz de cada sistema operativo.
+type uiOptions struct {
+	url         string
+	hidden      bool            // arrancar sin mostrar el panel
+	show        <-chan struct{} // peticiones de mostrar el panel
+	showPanel   func()          // pide mostrar el panel
+	quit        <-chan struct{} // se cierra cuando el programa debe terminar
+	requestQuit func()
+}
+
 func main() {
-	httpAddr := flag.String("http", "127.0.0.1:6455", "dirección del panel web local")
-	noBrowser := flag.Bool("no-browser", false, "no abrir el navegador al iniciar")
+	httpAddr := flag.String("http", "127.0.0.1:6455", "dirección interna del panel")
+	hidden := flag.Bool("hidden", false, "iniciar sin abrir la ventana (queda en la bandeja)")
+	flag.BoolVar(hidden, "no-browser", false, "igual que -hidden (nombre anterior)")
 	sim := flag.Int("sim", 0, "cantidad de interfaces DMX simuladas (para probar sin hardware)")
 	cfgPath := flag.String("config", filepath.Join(engine.ConfigDir(), "config.json"), "archivo de configuración")
 	showVersion := flag.Bool("version", false, "mostrar la versión y salir")
 	flag.Parse()
 	if *showVersion {
-		fmt.Println("LJ Buddy ArtNet Translator", version)
+		fmt.Println(appName, version)
 		return
 	}
 	url := "http://" + *httpAddr + "/"
 
-	// Una sola instancia: si el panel ya está en uso, se muestra el existente.
+	// Una sola instancia: si ya hay una en ejecución, se muestra su ventana.
 	ln, err := net.Listen("tcp", *httpAddr)
 	if err != nil {
-		if !*noBrowser {
-			openBrowser(url)
+		if !*hidden && showExisting(url) {
+			return
 		}
-		fmt.Fprintf(os.Stderr, "LJ Buddy ArtNet Translator ya está en ejecución (o %s está ocupado): %v\n", *httpAddr, err)
+		fmt.Fprintf(os.Stderr, "%s ya está en ejecución (o %s está ocupado): %v\n", appName, *httpAddr, err)
 		os.Exit(1)
 	}
 
@@ -54,7 +68,7 @@ func main() {
 	}
 	log.SetOutput(io.MultiWriter(out...))
 	log.SetFlags(log.Ltime)
-	log.Printf("LJ Buddy ArtNet Translator %s iniciado. Panel: %s", version, url)
+	log.Printf("%s %s iniciado. Panel: %s", appName, version, url)
 
 	e := engine.New(*cfgPath, *sim)
 	e.Start()
@@ -62,21 +76,41 @@ func main() {
 	quit := make(chan struct{})
 	var once sync.Once
 	requestQuit := func() { once.Do(func() { close(quit) }) }
+	show := make(chan struct{}, 1)
+	showPanel := func() {
+		select {
+		case show <- struct{}{}:
+		default:
+		}
+	}
 
 	go func() {
-		if err := http.Serve(ln, web.Handler(e, logs, version, requestQuit)); err != nil {
+		if err := http.Serve(ln, web.Handler(e, logs, version, showPanel, requestQuit)); err != nil {
 			log.Printf("Panel web: %v", err)
 		}
 	}()
-	if !*noBrowser {
-		openBrowser(url)
-	}
 
 	// Bloquea hasta que el usuario sale (bandeja, panel o Ctrl+C).
-	runUI(url, quit, requestQuit)
+	runUI(uiOptions{url: url, hidden: *hidden, show: show, showPanel: showPanel, quit: quit, requestQuit: requestQuit})
 
 	log.Print("Cerrando…")
 	e.Stop()
+}
+
+// showExisting pide a la instancia que ya está en ejecución que muestre su panel.
+func showExisting(url string) bool {
+	allowForeground()
+	req, err := http.NewRequest(http.MethodPost, url+"api/show", nil)
+	if err != nil {
+		return false
+	}
+	req.Header.Set("X-LJ-Buddy", "1")
+	resp, err := (&http.Client{Timeout: 3 * time.Second}).Do(req)
+	if err != nil {
+		return false
+	}
+	resp.Body.Close()
+	return resp.StatusCode == http.StatusOK
 }
 
 func openBrowser(url string) {

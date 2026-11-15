@@ -84,7 +84,7 @@ Section "Acceso directo en el escritorio" SecDesktop
 SectionEnd
 
 Section /o "Iniciar con Windows" SecAuto
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Run" "LJBuddyArtNetTranslator" '"$INSTDIR\${EXE}" -no-browser'
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Run" "LJBuddyArtNetTranslator" '"$INSTDIR\${EXE}" -hidden'
 SectionEnd
 
 !ifdef WITH_FTDI

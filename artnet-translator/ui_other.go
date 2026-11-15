@@ -8,11 +8,23 @@ import (
 	"syscall"
 )
 
-func runUI(_ string, quit <-chan struct{}, _ func()) {
+// runUI, fuera de Windows, muestra el panel en el navegador.
+func runUI(ui uiOptions) {
+	if !ui.hidden {
+		openBrowser(ui.url)
+	}
 	sig := make(chan os.Signal, 1)
 	signal.Notify(sig, os.Interrupt, syscall.SIGTERM)
-	select {
-	case <-sig:
-	case <-quit:
+	for {
+		select {
+		case <-ui.show:
+			openBrowser(ui.url)
+		case <-sig:
+			return
+		case <-ui.quit:
+			return
+		}
 	}
 }
+
+func allowForeground() {}

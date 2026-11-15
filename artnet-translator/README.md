@@ -35,8 +35,14 @@ También hay una versión portable (`.zip`) que no necesita instalación.
 
 ## Uso
 
-Al abrirlo aparece un icono en la bandeja del sistema y se abre el panel en
-el navegador (<http://127.0.0.1:6455/>).
+Al abrirlo se muestra la ventana del programa y aparece un icono en la
+bandeja del sistema. Cerrar la ventana no detiene el puente: sigue
+funcionando en la bandeja. Para volver a verla, usa **Abrir** en el menú del
+icono o ejecuta el programa otra vez; para detenerlo, **Salir**.
+
+La ventana usa WebView2, que viene con Windows 10 y 11. Si no está
+instalado, el panel se abre en el navegador (<http://127.0.0.1:6455/>), igual
+que en Linux.
 
 - **Entrada Art-Net**: interfaz de red donde escuchar y, opcionalmente, la
   **IP de origen**: solo se aceptan datos de ese emisor. Los emisores
@@ -71,8 +77,8 @@ El usuario necesita acceso a los puertos serie (`sudo usermod -aG dialout $USER`
 ### Opciones
 
 ```
--http 127.0.0.1:6455   dirección del panel
--no-browser            no abrir el navegador al iniciar
+-http 127.0.0.1:6455   dirección interna del panel
+-hidden                iniciar sin abrir la ventana (queda en la bandeja)
 -sim N                 N interfaces simuladas, para probar sin hardware
 -config ruta           archivo de configuración
 ```
@@ -100,7 +106,8 @@ entregables como artefactos; una etiqueta `v*` crea además una Release.
   `0x7E … 0xE7` y la interfaz genera la señal.
 - `internal/engine`: enumera puertos cada 2 s, sondea, asigna universos y
   reparte los datos.
-- `internal/web`: panel local (solo accesible desde el propio equipo).
+- `internal/web`: panel local (solo accesible desde el propio equipo). En
+  Windows se muestra en una ventana propia con WebView2 (`ui_windows.go`).
 
 ## Licencia
 

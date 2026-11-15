@@ -291,7 +291,7 @@ $('quit').onclick = async () => {
   if (!confirm('¿Cerrar LJ Buddy ArtNet Translator? Se dejará de enviar DMX.')) return;
   quitting = true;
   await post('/api/quit');
-  document.body.innerHTML = '<main><section>LJ Buddy ArtNet Translator se cerró. Ya puedes cerrar esta pestaña.</section></main>';
+  document.body.innerHTML = '<main><section>LJ Buddy ArtNet Translator se cerró. Ya puedes cerrar esta ventana.</section></main>';
 };
 refresh(); drawMon();
 setInterval(refresh, 800); setInterval(drawMon, 200);

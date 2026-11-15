@@ -1,0 +1,6 @@
+{
+  "buildCommand": "bash demo/build.sh",
+  "outputDirectory": "_site",
+  "installCommand": "",
+  "framework": null
+}

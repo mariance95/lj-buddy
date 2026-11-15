@@ -1,5 +1,5 @@
 {
-  "buildCommand": "bash demo/build.sh",
+  "buildCommand": "bash web-example/build.sh",
   "outputDirectory": "_site",
   "installCommand": "",
   "framework": null

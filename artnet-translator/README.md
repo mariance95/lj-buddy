@@ -110,7 +110,10 @@ MIT. El driver FTDI y las marcas Enttec y DMXking pertenecen a sus dueños.
 
 El panel se puede probar con datos simulados, sin instalar nada, en
 <https://lj-buddy.vercel.app/>.
-`demo/build.sh` genera la demo en `_site/` a partir del panel real
-anteponiéndole un motor simulado (`demo/mock.js`), y `vercel.json` hace que
+`web-example/build.sh` genera la demo en `_site/` a partir del panel real
+anteponiéndole un motor simulado (`web-example/mock.js`), y `vercel.json` hace que
 Vercel la construya sola al importar el repositorio con `artnet-translator`
 como directorio raíz.
+
+La carpeta `web-example/` se conserva tal cual como base para un futuro
+control remoto del complemento por WebSocket.

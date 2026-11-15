@@ -32,7 +32,7 @@ jobs:
           ./build.sh
       - uses: actions/upload-artifact@v4
         with:
-          name: lj-buddy
+          name: lj-buddy-artnet-translator
           path: |
             artnet-translator/dist/*.exe
             artnet-translator/dist/*.zip

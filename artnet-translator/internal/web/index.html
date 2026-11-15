@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>LJ Buddy · ArtNet to DMX Translator</title>
+<title>LJ Buddy ArtNet Translator</title>
 <style>
 :root{
   --bg:#0a0a0a; --panel:#151515; --panel2:#1e1e1e; --line:#303030; --text:#f2f2f2; --dim:#8c8c8c;
@@ -114,7 +114,7 @@ a.src{color:var(--sky);cursor:pointer;text-decoration:underline dotted}
     <pre id="log"></pre>
   </section>
 </main>
-<div id="lost">LJ Buddy no responde. El programa se cerró o se está reiniciando.</div>
+<div id="lost">LJ Buddy ArtNet Translator no responde. El programa se cerró o se está reiniciando.</div>
 <script>
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -288,10 +288,10 @@ async function saveNet() {
 for (const id of ['listenIP', 'sourceIP', 'firstUniverse']) $(id).addEventListener('input', () => netDirty = true);
 $('saveNet').onclick = saveNet;
 $('quit').onclick = async () => {
-  if (!confirm('¿Cerrar LJ Buddy? Se dejará de enviar DMX.')) return;
+  if (!confirm('¿Cerrar LJ Buddy ArtNet Translator? Se dejará de enviar DMX.')) return;
   quitting = true;
   await post('/api/quit');
-  document.body.innerHTML = '<main><section>LJ Buddy se cerró. Ya puedes cerrar esta pestaña.</section></main>';
+  document.body.innerHTML = '<main><section>LJ Buddy ArtNet Translator se cerró. Ya puedes cerrar esta pestaña.</section></main>';
 };
 refresh(); drawMon();
 setInterval(refresh, 800); setInterval(drawMon, 200);

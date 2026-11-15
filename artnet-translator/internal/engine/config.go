@@ -33,7 +33,7 @@ func ConfigDir() string {
 	if err != nil {
 		base = "."
 	}
-	return filepath.Join(base, "LJBuddy")
+	return filepath.Join(base, "LJBuddyArtNetTranslator")
 }
 
 func loadConfig(path string) Config {

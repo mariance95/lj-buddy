@@ -1,4 +1,4 @@
-# LJ Buddy · ArtNet to DMX Translator
+# LJ Buddy ArtNet Translator
 
 Complemento de [LJ Buddy](../README.md). Puente **Art-Net → DMX** para interfaces USB. Recibe universos Art-Net por la
 red y los envía por una o varias interfaces DMX conectadas al equipo, con un
@@ -22,7 +22,7 @@ una clave de API que Enttec entrega a cada desarrollador.
 
 ## Instalación en Windows
 
-1. Descarga y ejecuta `LJ-Buddy-Setup-<versión>.exe`.
+1. Descarga y ejecuta `LJ-Buddy-ArtNet-Translator-Setup-<versión>.exe`.
    Como el instalador no está firmado, Windows SmartScreen puede avisar:
    **Más información → Ejecutar de todas formas**.
 2. Elige los componentes (acceso directo, iniciar con Windows). El instalador
@@ -54,16 +54,16 @@ el navegador (<http://127.0.0.1:6455/>).
 Los universos usan el Port-Address de Art-Net (0–32767). Si tu software
 numera desde 1, su "universo 1" suele ser el 0 de Art-Net.
 
-LJ Buddy responde a ArtPoll, así que aparece como nodo en el software de
+El complemento responde a ArtPoll, así que aparece como nodo en el software de
 iluminación. Si se pierde la señal Art-Net se mantiene el último valor.
 
-La configuración se guarda en `%AppData%\LJBuddy\config.json` y el registro
-en `lj-buddy.log` de la misma carpeta.
+La configuración se guarda en `%AppData%\LJBuddyArtNetTranslator\config.json` y el registro
+en `lj-buddy-artnet-translator.log` de la misma carpeta.
 
 ### Linux
 
 ```sh
-tar xzf LJ-Buddy-<versión>-linux-amd64.tar.gz && ./lj-buddy
+tar xzf LJ-Buddy-ArtNet-Translator-<versión>-linux-amd64.tar.gz && ./lj-buddy-artnet-translator
 ```
 
 El usuario necesita acceso a los puertos serie (`sudo usermod -aG dialout $USER`).

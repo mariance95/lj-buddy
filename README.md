@@ -11,7 +11,7 @@ comenzar a desarrollarse.
 
 | Carpeta | Qué es |
 |---|---|
-| [`artnet-translator/`](artnet-translator/) | **ArtNet to DMX Translator**: recibe universos Art-Net por la red y los envía por interfaces USB-DMX (Enttec Open DMX, DMX USB Pro y compatibles). Incluye instalador para Windows. Su versión web de ejemplo está en [`artnet-translator/web-example/`](artnet-translator/web-example/). |
+| [`artnet-translator/`](artnet-translator/) | **LJ Buddy ArtNet Translator**: recibe universos Art-Net por la red y los envía por interfaces USB-DMX (Enttec Open DMX, DMX USB Pro y compatibles). Incluye instalador para Windows. Su versión web de ejemplo está en [`artnet-translator/web-example/`](artnet-translator/web-example/). |
 
 ## Licencia
 

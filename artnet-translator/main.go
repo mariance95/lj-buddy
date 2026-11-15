@@ -1,4 +1,4 @@
-// LJ Buddy: puente Art-Net → DMX para interfaces USB (Enttec Open DMX, DMX
+// LJ Buddy ArtNet Translator: puente Art-Net → DMX para interfaces USB (Enttec Open DMX, DMX
 // USB Pro y compatibles).
 package main
 
@@ -29,7 +29,7 @@ func main() {
 	showVersion := flag.Bool("version", false, "mostrar la versión y salir")
 	flag.Parse()
 	if *showVersion {
-		fmt.Println("LJ Buddy", version)
+		fmt.Println("LJ Buddy ArtNet Translator", version)
 		return
 	}
 	url := "http://" + *httpAddr + "/"
@@ -40,21 +40,21 @@ func main() {
 		if !*noBrowser {
 			openBrowser(url)
 		}
-		fmt.Fprintf(os.Stderr, "LJ Buddy ya está en ejecución (o %s está ocupado): %v\n", *httpAddr, err)
+		fmt.Fprintf(os.Stderr, "LJ Buddy ArtNet Translator ya está en ejecución (o %s está ocupado): %v\n", *httpAddr, err)
 		os.Exit(1)
 	}
 
 	logs := &web.LogBuffer{}
 	out := []io.Writer{logs, os.Stderr}
 	if err := os.MkdirAll(engine.ConfigDir(), 0o755); err == nil {
-		if f, err := os.Create(filepath.Join(engine.ConfigDir(), "lj-buddy.log")); err == nil {
+		if f, err := os.Create(filepath.Join(engine.ConfigDir(), "lj-buddy-artnet-translator.log")); err == nil {
 			defer f.Close()
 			out = append(out, f)
 		}
 	}
 	log.SetOutput(io.MultiWriter(out...))
 	log.SetFlags(log.Ltime)
-	log.Printf("LJ Buddy %s iniciado. Panel: %s", version, url)
+	log.Printf("LJ Buddy ArtNet Translator %s iniciado. Panel: %s", version, url)
 
 	e := engine.New(*cfgPath, *sim)
 	e.Start()

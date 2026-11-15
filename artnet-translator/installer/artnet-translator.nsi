@@ -1,5 +1,5 @@
-; Instalador de LJ Buddy para Windows (NSIS 3).
-; Compilar con:  makensis -DVERSION=1.0.0 installer/lj-buddy.nsi
+; Instalador de LJ Buddy ArtNet Translator para Windows (NSIS 3).
+; Compilar con:  makensis -DVERSION=1.0.0 installer/artnet-translator.nsi
 ; Si existe installer\drivers\CDM-Setup.exe (instalador del driver FTDI CDM,
 ; descargado de https://ftdichip.com/drivers/vcp-drivers/), se incluye como
 ; componente opcional.
@@ -10,21 +10,21 @@ Unicode true
 !ifndef VERSION
   !define VERSION "1.0.0"
 !endif
-!define APP "LJ Buddy"
-!define EXE "lj-buddy.exe"
-!define UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\LJBuddy"
+!define APP "LJ Buddy ArtNet Translator"
+!define EXE "lj-buddy-artnet-translator.exe"
+!define UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\LJBuddyArtNetTranslator"
 !define FTDI_URL "https://ftdichip.com/drivers/vcp-drivers/"
 
 Name "${APP} ${VERSION}"
-OutFile "..\dist\LJ-Buddy-Setup-${VERSION}.exe"
+OutFile "..\dist\LJ-Buddy-ArtNet-Translator-Setup-${VERSION}.exe"
 InstallDir "$PROGRAMFILES64\${APP}"
-InstallDirRegKey HKLM "Software\LJBuddy" "InstallDir"
+InstallDirRegKey HKLM "Software\LJBuddyArtNetTranslator" "InstallDir"
 RequestExecutionLevel admin
 SetCompressor /SOLID lzma
 
 VIProductVersion "${VERSION}.0"
 VIAddVersionKey "ProductName" "${APP}"
-VIAddVersionKey "FileDescription" "Instalador de ${APP} (Art-Net a DMX)"
+VIAddVersionKey "FileDescription" "Instalador de ${APP}"
 VIAddVersionKey "FileVersion" "${VERSION}"
 VIAddVersionKey "LegalCopyright" "MIT"
 
@@ -65,10 +65,10 @@ Section "${APP} (programa)" SecMain
   CreateShortcut "$SMPROGRAMS\${APP}\Desinstalar ${APP}.lnk" "$INSTDIR\Desinstalar.exe"
 
   ; Regla de firewall: Art-Net entra por UDP 6454.
-  nsExec::Exec 'netsh advfirewall firewall delete rule name="LJ Buddy Art-Net"'
-  nsExec::Exec 'netsh advfirewall firewall add rule name="LJ Buddy Art-Net" dir=in action=allow protocol=UDP localport=6454 program="$INSTDIR\${EXE}" enable=yes'
+  nsExec::Exec 'netsh advfirewall firewall delete rule name="LJ Buddy ArtNet Translator"'
+  nsExec::Exec 'netsh advfirewall firewall add rule name="LJ Buddy ArtNet Translator" dir=in action=allow protocol=UDP localport=6454 program="$INSTDIR\${EXE}" enable=yes'
 
-  WriteRegStr HKLM "Software\LJBuddy" "InstallDir" "$INSTDIR"
+  WriteRegStr HKLM "Software\LJBuddyArtNetTranslator" "InstallDir" "$INSTDIR"
   WriteRegStr HKLM "${UNINST_KEY}" "DisplayName" "${APP}"
   WriteRegStr HKLM "${UNINST_KEY}" "DisplayVersion" "${VERSION}"
   WriteRegStr HKLM "${UNINST_KEY}" "DisplayIcon" "$INSTDIR\icon.ico"
@@ -84,7 +84,7 @@ Section "Acceso directo en el escritorio" SecDesktop
 SectionEnd
 
 Section /o "Iniciar con Windows" SecAuto
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Run" "LJBuddy" '"$INSTDIR\${EXE}" -no-browser'
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Run" "LJBuddyArtNetTranslator" '"$INSTDIR\${EXE}" -no-browser'
 SectionEnd
 
 !ifdef WITH_FTDI
@@ -108,7 +108,7 @@ SectionEnd
 Section "Uninstall"
   nsExec::Exec 'taskkill /F /IM ${EXE}'
   Sleep 500
-  nsExec::Exec 'netsh advfirewall firewall delete rule name="LJ Buddy Art-Net"'
+  nsExec::Exec 'netsh advfirewall firewall delete rule name="LJ Buddy ArtNet Translator"'
   Delete "$INSTDIR\${EXE}"
   Delete "$INSTDIR\icon.ico"
   Delete "$INSTDIR\LEEME.txt"
@@ -121,7 +121,7 @@ Section "Uninstall"
   Delete "$SMPROGRAMS\${APP}\Desinstalar ${APP}.lnk"
   RMDir "$SMPROGRAMS\${APP}"
   Delete "$DESKTOP\${APP}.lnk"
-  DeleteRegValue HKLM "Software\Microsoft\Windows\CurrentVersion\Run" "LJBuddy"
+  DeleteRegValue HKLM "Software\Microsoft\Windows\CurrentVersion\Run" "LJBuddyArtNetTranslator"
   DeleteRegKey HKLM "${UNINST_KEY}"
-  DeleteRegKey HKLM "Software\LJBuddy"
+  DeleteRegKey HKLM "Software\LJBuddyArtNetTranslator"
 SectionEnd

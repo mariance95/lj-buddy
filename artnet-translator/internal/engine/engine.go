@@ -234,7 +234,7 @@ func (e *Engine) replyPoll(conn *net.UDPConn, addr *net.UDPAddr) {
 	sort.Slice(unis, func(i, j int) bool { return unis[i] < unis[j] })
 	ip, mac := artnet.LocalIPFor(addr.IP)
 	dst := &net.UDPAddr{IP: addr.IP, Port: artnet.Port}
-	for _, r := range artnet.BuildPollReplies(ip, mac, "LJ Buddy", "LJ Buddy Art-Net a DMX", unis) {
+	for _, r := range artnet.BuildPollReplies(ip, mac, "LJBuddy ArtNet", "LJ Buddy ArtNet Translator", unis) {
 		_, _ = conn.WriteToUDP(r, dst)
 	}
 }

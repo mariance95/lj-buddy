@@ -1,4 +1,4 @@
-// Demo en línea: reemplaza la API local de LJ Buddy por un motor simulado en
+// Demo en línea: reemplaza la API local de LJ Buddy ArtNet Translator por un motor simulado en
 // el navegador. Nada de lo que se ve aquí sale por un puerto real.
 (() => {
   const t0 = Date.now();
@@ -18,7 +18,7 @@
       { id: '0403:6001:AL01B7YZ', name: 'FT232R USB UART', port: '', serial: '', kind: '', kindLabel: 'Sin identificar', detail: '', universes: [4], hz: 0, absent: true },
     ].map(d => ({ enabled: true, test: false, kindMode: '', ...d })),
   };
-  say('LJ Buddy 1.0.0 iniciado. Panel: http://127.0.0.1:6455/');
+  say('LJ Buddy ArtNet Translator 1.0.0 iniciado. Panel: http://127.0.0.1:6455/');
   say('Art-Net: escuchando en 0.0.0.0:6454');
   for (const d of S.devs) if (!d.absent) {
     say(`Interfaz detectada: ${d.name} en ${d.port}`);

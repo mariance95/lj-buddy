@@ -119,7 +119,7 @@ func BuildPollReplies(ip net.IP, mac net.HardwareAddr, shortName, longName strin
 		b[23] = 0xd0              // indicadores normales, dirección por red
 		copy(b[26:43], shortName) // 18 bytes con terminador
 		copy(b[44:107], longName) // 64 bytes con terminador
-		copy(b[108:171], "#0001 [0000] LJ Buddy OK")
+		copy(b[108:171], "#0001 [0000] LJ Buddy ArtNet Translator OK")
 		b[173] = byte(len(g.unis))
 		for i, u := range g.unis {
 			b[174+i] = 0x80 // salida DMX512

@@ -1,0 +1,4 @@
+/dist/
+/installer/drivers/
+*.syso
+*.exe

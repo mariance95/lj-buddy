@@ -7,7 +7,9 @@
 <style>
 :root{
   --bg:#0a0a0a; --panel:#151515; --panel2:#1e1e1e; --line:#303030; --text:#f2f2f2; --dim:#8c8c8c;
-  --amber:#ffb000; --accent:#f2f2f2; --ok:#38d07c; --warn:#ffb000; --bad:#ff5d5d; --mono:ui-monospace,SFMono-Regular,Consolas,monospace;
+  /* Paleta ShowBuddy: LJ ámbar, VJ verde azulado, DJ rojo pastel, CJ celeste, SJ púrpura */
+  --amber:#ffb000; --teal:#1fd6ae; --red:#ff8080; --sky:#5ccbff; --purple:#b388ff;
+  --accent:#f2f2f2; --ok:var(--teal); --warn:var(--amber); --bad:var(--red); --mono:ui-monospace,SFMono-Regular,Consolas,monospace;
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--text);font:14px/1.45 system-ui,"Segoe UI",Roboto,sans-serif}
@@ -22,17 +24,18 @@ section{background:var(--panel);border:1px solid var(--line);border-radius:10px;
 h2{font-size:12px;text-transform:uppercase;letter-spacing:1.2px;color:var(--dim);margin:0 0 12px;font-weight:600}
 .pill{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:99px;font-size:12px;background:var(--panel2);border:1px solid var(--line);white-space:nowrap}
 .dot{width:8px;height:8px;border-radius:50%;background:var(--dim);flex:none}
-.ok .dot{background:var(--ok);box-shadow:0 0 6px var(--ok)} .warn .dot{background:var(--warn)} .bad .dot{background:var(--bad)}
+.pill.kind{color:var(--sky);border-color:var(--sky)}
+.ok .dot{background:var(--ok);box-shadow:0 0 6px var(--ok)} .warn .dot{background:var(--warn)} .test .dot{background:var(--purple);box-shadow:0 0 6px var(--purple)} .bad .dot{background:var(--bad)}
 .row{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end}
 label{display:grid;gap:5px;font-size:12px;color:var(--dim)}
 input,select,button{font:inherit;color:var(--text);background:var(--panel2);border:1px solid var(--line);border-radius:7px;padding:7px 10px}
-input:focus,select:focus{outline:2px solid var(--accent);outline-offset:-1px}
+input:focus,select:focus{outline:2px solid var(--sky);outline-offset:-1px}
 input[type=number]{width:96px;font-family:var(--mono)}
 button{cursor:pointer}
 button:hover{border-color:var(--dim)}
-button.primary{background:var(--accent);color:#0a0a0a;border-color:var(--accent);font-weight:600}
+button.primary{background:var(--amber);color:#0a0a0a;border-color:var(--amber);font-weight:600}
 button.ghost{background:none}
-button.on{background:var(--accent);color:#0a0a0a;border-color:var(--accent)}
+button.on{background:var(--purple);color:#0a0a0a;border-color:var(--purple)}
 .hint{color:var(--dim);font-size:12px;margin-top:10px}
 .err{color:var(--bad);font-size:13px;margin-top:8px}
 .devs{display:grid;gap:12px}
@@ -55,7 +58,7 @@ td.num{font-family:var(--mono)}
 .empty{color:var(--dim);padding:8px 0}
 canvas{width:100%;height:120px;background:#050505;border-radius:7px;border:1px solid var(--line);display:block}
 pre{margin:0;max-height:180px;overflow:auto;font:12px/1.5 var(--mono);color:var(--dim);white-space:pre-wrap}
-a.src{color:var(--accent);cursor:pointer;text-decoration:underline dotted}
+a.src{color:var(--sky);cursor:pointer;text-decoration:underline dotted}
 #lost{display:none;position:fixed;inset:auto 0 0 0;background:var(--bad);color:#fff;text-align:center;padding:10px;font-weight:600}
 </style>
 </head>
@@ -173,7 +176,7 @@ function renderDevs(s) {
     let st, cls;
     if (!d.present) [st, cls] = ['Desconectada', ''];
     else if (!d.enabled) [st, cls] = ['Deshabilitada', ''];
-    else if (d.running) [st, cls] = [d.test ? 'Prueba: todo al 100 %' : 'Transmitiendo', d.test ? 'warn' : 'ok'];
+    else if (d.running) [st, cls] = [d.test ? 'Prueba: todo al 100 %' : 'Transmitiendo', d.test ? 'test' : 'ok'];
     else if (d.error) [st, cls] = ['Error', 'bad'];
     else [st, cls] = ['Iniciando…', 'warn'];
     const outs = d.outputs.map((o, i) => `
@@ -189,7 +192,7 @@ function renderDevs(s) {
       <div class="top">
         <span class="name">${esc(d.name)}</span>
         <span class="pill ${cls}"><span class="dot"></span>${st}</span>
-        <span class="pill">${esc(d.kindLabel)}${d.outputs.length > 1 ? ' · ' + d.outputs.length + ' universos' : ''}</span>
+        <span class="pill kind">${esc(d.kindLabel)}${d.outputs.length > 1 ? ' · ' + d.outputs.length + ' universos' : ''}</span>
         <span class="meta">${esc([d.port, d.detail || (d.serial ? 'N/S ' + d.serial : '')].filter(Boolean).join(' · '))}</span>
       </div>
       <div class="outs">${outs}</div>
@@ -244,7 +247,7 @@ async function drawMon() {
     for (let i = 0; i < 512; i++) {
       const v = bin.charCodeAt(i);
       if (v) on++;
-      g.fillStyle = i % 16 < 8 ? '#f2f2f2' : '#a6a6a6';
+      g.fillStyle = i % 16 < 8 ? '#ffb000' : '#b37b00';
       const h = v / 255 * c.height;
       g.fillRect(i * 2, c.height - h, 2, h);
     }

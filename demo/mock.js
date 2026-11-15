@@ -124,7 +124,7 @@
 
   document.addEventListener('DOMContentLoaded', () => {
     const bar = document.createElement('div');
-    bar.style.cssText = 'background:#ffb000;color:#1a1300;text-align:center;padding:8px 14px;font-weight:600;font-size:13px';
+    bar.style.cssText = 'background:#2a2a2a;color:#f2f2f2;border:1px solid #444;text-align:center;padding:8px 14px;font-weight:600;font-size:13px';
     bar.innerHTML = 'Demo en línea con datos simulados: aquí no hay interfaces ni Art-Net reales. ' +
       '<a href="https://github.com/mariance95/lj-buddy" style="color:inherit">Código y descargas en GitHub</a>';
     bar.style.borderRadius = "8px";

@@ -3,17 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>LJ Buddy · Art-Net a DMX</title>
+<title>LJ Buddy · ArtNet to DMX Translator</title>
 <style>
 :root{
-  --bg:#12141a; --panel:#1b1e27; --panel2:#232733; --line:#2e3342; --text:#e8eaf0; --dim:#8d94a8;
-  --accent:#ffb000; --ok:#38d07c; --warn:#ffb000; --bad:#ff5d5d; --mono:ui-monospace,SFMono-Regular,Consolas,monospace;
+  --bg:#0a0a0a; --panel:#151515; --panel2:#1e1e1e; --line:#303030; --text:#f2f2f2; --dim:#8c8c8c;
+  --amber:#ffb000; --accent:#f2f2f2; --ok:#38d07c; --warn:#ffb000; --bad:#ff5d5d; --mono:ui-monospace,SFMono-Regular,Consolas,monospace;
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--text);font:14px/1.45 system-ui,"Segoe UI",Roboto,sans-serif}
 header{display:flex;align-items:center;gap:14px;padding:14px 22px;border-bottom:1px solid var(--line);background:var(--panel);position:sticky;top:0;z-index:5}
 header h1{font-size:17px;margin:0;font-weight:650;letter-spacing:.2px}
-header h1 span{color:var(--accent)}
+header h1 .lj{color:var(--amber)}
+header .sub{color:var(--dim);font-size:13px;letter-spacing:.3px;padding-left:14px;border-left:1px solid var(--line)}
 header .ver{color:var(--dim);font-size:12px}
 header .grow{flex:1}
 main{max-width:1080px;margin:0 auto;padding:20px 22px 60px;display:grid;gap:18px}
@@ -29,9 +30,9 @@ input:focus,select:focus{outline:2px solid var(--accent);outline-offset:-1px}
 input[type=number]{width:96px;font-family:var(--mono)}
 button{cursor:pointer}
 button:hover{border-color:var(--dim)}
-button.primary{background:var(--accent);color:#1a1300;border-color:var(--accent);font-weight:600}
+button.primary{background:var(--accent);color:#0a0a0a;border-color:var(--accent);font-weight:600}
 button.ghost{background:none}
-button.on{background:var(--accent);color:#1a1300;border-color:var(--accent)}
+button.on{background:var(--accent);color:#0a0a0a;border-color:var(--accent)}
 .hint{color:var(--dim);font-size:12px;margin-top:10px}
 .err{color:var(--bad);font-size:13px;margin-top:8px}
 .devs{display:grid;gap:12px}
@@ -52,7 +53,7 @@ th,td{text-align:left;padding:6px 10px;border-bottom:1px solid var(--line);font-
 th{color:var(--dim);font-weight:500;font-size:12px}
 td.num{font-family:var(--mono)}
 .empty{color:var(--dim);padding:8px 0}
-canvas{width:100%;height:120px;background:#0c0d12;border-radius:7px;border:1px solid var(--line);display:block}
+canvas{width:100%;height:120px;background:#050505;border-radius:7px;border:1px solid var(--line);display:block}
 pre{margin:0;max-height:180px;overflow:auto;font:12px/1.5 var(--mono);color:var(--dim);white-space:pre-wrap}
 a.src{color:var(--accent);cursor:pointer;text-decoration:underline dotted}
 #lost{display:none;position:fixed;inset:auto 0 0 0;background:var(--bad);color:#fff;text-align:center;padding:10px;font-weight:600}
@@ -60,7 +61,7 @@ a.src{color:var(--accent);cursor:pointer;text-decoration:underline dotted}
 </head>
 <body>
 <header>
-  <h1>LJ <span>Buddy</span></h1><span class="ver" id="ver"></span>
+  <h1><span class="lj">LJ</span> Buddy</h1><span class="sub">ArtNet to DMX Translator</span><span class="ver" id="ver"></span>
   <span class="grow"></span>
   <span class="pill" id="netpill"><span class="dot"></span><span id="nettext">Iniciando…</span></span>
   <button class="ghost" id="quit" title="Detener el puente y cerrar el programa">Salir</button>
@@ -243,7 +244,7 @@ async function drawMon() {
     for (let i = 0; i < 512; i++) {
       const v = bin.charCodeAt(i);
       if (v) on++;
-      g.fillStyle = i % 16 < 8 ? '#ffb000' : '#ffc94d';
+      g.fillStyle = i % 16 < 8 ? '#f2f2f2' : '#a6a6a6';
       const h = v / 255 * c.height;
       g.fillRect(i * 2, c.height - h, 2, h);
     }

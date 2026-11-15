@@ -15,7 +15,7 @@ func runUI(url string, quit <-chan struct{}, requestQuit func()) {
 	systray.Run(func() {
 		systray.SetIcon(trayIcon)
 		systray.SetTitle("LJ Buddy")
-		systray.SetTooltip("LJ Buddy: Art-Net a DMX")
+		systray.SetTooltip("LJ Buddy: ArtNet to DMX Translator")
 		open := systray.AddMenuItem("Abrir panel", "Abre el panel de control en el navegador")
 		systray.AddSeparator()
 		exit := systray.AddMenuItem("Salir", "Detiene el puente y cierra LJ Buddy")

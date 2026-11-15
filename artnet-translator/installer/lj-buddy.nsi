@@ -57,7 +57,7 @@ Section "${APP} (programa)" SecMain
   File "..\dist\windows\${EXE}"
   File "..\assets\icon.ico"
   File /oname=LEEME.txt "..\README.md"
-  File /oname=LICENCIA.txt "..\LICENSE"
+  File /oname=LICENCIA.txt "..\..\LICENSE"
   WriteUninstaller "$INSTDIR\Desinstalar.exe"
 
   CreateDirectory "$SMPROGRAMS\${APP}"

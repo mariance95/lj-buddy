@@ -24,8 +24,8 @@ GOOS=windows GOARCH=amd64 go build -trimpath -ldflags "${LDFLAGS} -H windowsgui"
 GOOS=linux GOARCH=amd64 go build -trimpath -ldflags "${LDFLAGS}" -o dist/linux/lj-buddy .
 rm -f rsrc_windows_*.syso
 
-(cd dist/windows && zip -q "../LJ-Buddy-${VERSION}-windows.zip" lj-buddy.exe && zip -qj "../LJ-Buddy-${VERSION}-windows.zip" ../../README.md ../../LICENSE)
-tar -czf "dist/LJ-Buddy-${VERSION}-linux-amd64.tar.gz" -C dist/linux lj-buddy -C ../.. README.md LICENSE
+(cd dist/windows && zip -q "../LJ-Buddy-${VERSION}-windows.zip" lj-buddy.exe && zip -qj "../LJ-Buddy-${VERSION}-windows.zip" ../../README.md ../../../LICENSE)
+tar -czf "dist/LJ-Buddy-${VERSION}-linux-amd64.tar.gz" -C dist/linux lj-buddy -C ../.. README.md -C .. LICENSE
 
 if command -v makensis >/dev/null; then
   FTDI=()

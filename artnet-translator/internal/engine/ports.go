@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/mariance95/lj-buddy/internal/dmx"
+	"github.com/mariance95/lj-buddy/artnet-translator/internal/dmx"
 	"go.bug.st/serial"
 	"go.bug.st/serial/enumerator"
 )

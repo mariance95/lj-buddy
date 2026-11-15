@@ -11,8 +11,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/mariance95/lj-buddy/internal/artnet"
-	"github.com/mariance95/lj-buddy/internal/dmx"
+	"github.com/mariance95/lj-buddy/artnet-translator/internal/artnet"
+	"github.com/mariance95/lj-buddy/artnet-translator/internal/dmx"
 )
 
 const maxUniverse = 32767

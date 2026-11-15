@@ -6,8 +6,8 @@ import (
 	"sort"
 	"time"
 
-	"github.com/mariance95/lj-buddy/internal/artnet"
-	"github.com/mariance95/lj-buddy/internal/dmx"
+	"github.com/mariance95/lj-buddy/artnet-translator/internal/artnet"
+	"github.com/mariance95/lj-buddy/artnet-translator/internal/dmx"
 )
 
 // Tipos que consume el panel web.

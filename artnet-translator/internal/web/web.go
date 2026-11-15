@@ -10,7 +10,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/mariance95/lj-buddy/internal/engine"
+	"github.com/mariance95/lj-buddy/artnet-translator/internal/engine"
 )
 
 //go:embed index.html

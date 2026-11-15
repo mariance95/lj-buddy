@@ -1,4 +1,4 @@
-module github.com/mariance95/lj-buddy
+module github.com/mariance95/lj-buddy/artnet-translator
 
 go 1.25.0
 

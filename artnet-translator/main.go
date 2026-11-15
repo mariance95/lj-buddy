@@ -15,8 +15,8 @@ import (
 	"runtime"
 	"sync"
 
-	"github.com/mariance95/lj-buddy/internal/engine"
-	"github.com/mariance95/lj-buddy/internal/web"
+	"github.com/mariance95/lj-buddy/artnet-translator/internal/engine"
+	"github.com/mariance95/lj-buddy/artnet-translator/internal/web"
 )
 
 var version = "1.0.0"
